@@ -1,0 +1,110 @@
+{%extends "base.html"%}
+
+{% block titulo %} Lista de Libros {% endblock %}
+
+{% block contenido %} 
+
+<div class="card", style="width: 80vw; margin-right: 1vw">
+    <div class="card-header">
+        <div class="row">
+            {% if request.user.is_authenticated %}
+                <h5>{{ user.username | upper }}, bienvenido</h5>
+                <br><br>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <a name="" id="" class="btn btn-success" href="{% url 'crear' %}" role="button">Agregar Libro</a>
+            </div>
+
+            <!--Boton carga masiva-->
+            <div class="col-md-2">
+                <a name="" id="" class="btn btn-success" href="{% url 'subir_csv' %}" role="button">Carga Masiva</a>
+            </div>
+
+
+            <!--Barra de búsqueda-->
+            <div class="col-md-8 text-right">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Buscar por ISBN, Titulo, Autor o Palabra clave... " name="buscar">
+                            <button class="btn btn-success" type="submit">Buscar</button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--fin barra busqueda-->
+        </div>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Libros</h4>
+        
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr class="centrado">  <!--Cabeceras de la tabla-->
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Ubicación</th>
+                        <th scope="col">Ejemplares  <br> Totales</th>
+                        <th scope="col">Ejemplares  <br> Disponibles</th>
+                        <th scope="col">Ejemplares  <br> Prestados</th>
+                       <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for libro in libros %}
+
+                    <tr class="centrado">
+                        <td>{{ libro.isbn }}</td>
+                        <td>{{ libro.titulo }}</td>
+                        <td>{{ libro.autor }}</td>
+                        <td>{{ libro.categoria }}</td>
+                        <td>{{ libro.ubicacion }}</td>
+                        <td>{{ libro.ejemplares_totales }}</td>
+                        <td>{{ libro.ejemplares_disponibles }}</td>
+                        <td>{{ libro.ejemplares_prestados }}</td>
+                        <td> <a name="" id="" class="btn btn-info" href="{% url 'editar' libro.isbn %}" role="button">Editar</a>  
+                            <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' libro.isbn %}" role="button" onclick="return confirmarEliminacion()">Borrar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if libros.has_previous %}
+                    <a href="?page=1">&laquo; primera</a>
+                    <a href="?page={{ libros.previous_page_number }}">anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ libros.number }} de {{ libros.paginator.num_pages }}.
+                </span>
+
+                {% if libros.has_next %}
+                    <a href="?page={{ libros.next_page_number }}">siguiente</a>
+                    <a href="?page={{ libros.paginator.num_pages }}">última &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        
+    </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+  <script>
+    function confirmarEliminacion() {
+      return confirm("¿Estás seguro de que quieres eliminar el ejemplar?");
+    }
+  </script>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{%extends "base.html"%}
+
+{% block titulo %} Préstamos {% endblock %}
+
+{% block contenido %} 
+
+<div class="card", style="width: 80vw; margin-right: 1vw">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-2">
+                <a name="" id="" class="btn btn-success" href="{% url 'nuevo_prestamo' %}" role="button">Nuevo Préstamo</a>
+            </div>
+            <!--Búsqueda Préstamos-->
+            <div class="col-md-8 text-right">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Buscar por ISBN, RUT o Estado " name="buscar_prestamo">
+                            <button class="btn btn-success" type="submit">Buscar</button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Préstamos</h4>
+        
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr class="centrado"> <!--Cabeceras de la tabla-->
+                        <th scope="col">ID Préstamo</th>
+                        <th scope="col">Isbn</th>
+                        <th scope="col">Rut Usuario</th>
+                        <th scope="col">Fecha Préstamo</th>
+                        <th scope="col">Fecha 
+                        Devolucion Calculada</th>
+                        <th scope="col">Fecha Devolucion Real</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prestamo in prestamos %}
+                    <tr class="centrado">
+                        <td>{{ prestamo.id_prestamo }}</td>
+                        <td>{{ prestamo.isbn }}</td>
+                        <td>{{ prestamo.rut_usuario }}</td>
+                        <td>{{ prestamo.fecha_prestamo }}</td>
+                        <td>{{ prestamo.fecha_devolucion_calculada }}</td>
+                        <td>{{ prestamo.fecha_devolucion_real }}</td>
+                        <td>{{ prestamo.estado_prestamo }}</td>
+                        <td> <a name="" id="" class="btn btn-info" href="{% url 'editar_prestamo' prestamo.id_prestamo %}" role="button">Editar</a> 
+                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_prestamo' prestamo.id_prestamo %}" role="button" onclick="return confirmarEliminacion()">Borrar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+  <script>
+    function confirmarEliminacion() {
+      return confirm("¿Estás seguro de que quieres eliminar el ejemplar?");
+    }
+  </script>
+{% endblock %}

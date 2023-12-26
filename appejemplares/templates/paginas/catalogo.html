@@ -1,0 +1,61 @@
+{%extends "base.html"%}
+
+{% block titulo %} Lista de Libros {% endblock %}
+
+{% block contenido %} 
+
+<div class="card", style="width: 80vw; margin-right: 1vw">
+    <div class="card-header">
+        <div class="row">
+            <!--Barra de búsqueda-->
+            <div class="col-md-8 text-right">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Buscar por ISBN, Titulo, Autor o Palabra clave... " name="buscar">
+                            <button class="btn btn-success" type="submit">Buscar</button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--fin barra busqueda-->
+        </div>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Catálogo</h4>
+        
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr class="centrado"> <!--Cabeceras de la tabla-->
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Ejemplares</th>
+                        <!--<th scope="col">Imagen</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for libro in libros %}
+
+                    <tr class="centrado">
+                        <td>{{ libro.isbn }}</td>
+                        <td>{{ libro.titulo }}</td>
+                        <td>{{ libro.autor }}</td>
+                        <td>{{ libro.categoria }}</td>
+                        <td>{{ libro.ejemplares_disponibles }}</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+{% endblock %}

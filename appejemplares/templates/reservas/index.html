@@ -1,0 +1,61 @@
+{%extends "base.html"%}
+
+{% block titulo %} Reservas {% endblock %}
+
+{% block contenido %} 
+
+<div class="card", style="width: 80vw; margin-right: 1vw">
+    <div class="card-header">
+        <div class="row">
+            <!--Barra de búsqueda-->
+            <div class="col-md-8 text-right">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Buscar por ID Reserva o Usuario..." name="buscar_reserva">
+                            <button class="btn btn-success" type="submit">Buscar</button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--fin barra busqueda-->
+        </div>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Reservas</h4>
+        
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr> <!--Cabeceras de la tabla-->
+                        <th scope="col">ID Reserva</th>
+                        <th scope="col">Fecha Reserva</th>
+                        <th scope="col">ID Libro</th>
+                        <th scope="col">ID Usuario</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for reserva in reservas %}
+
+                    <tr class="">
+                        <td>{{ reserva.id_reserva }}</td>
+                        <td>{{ reserva.fecha_reserva }}</td>
+                        <td>{{ reserva.isbn }}</td>
+                        <td>{{ reserva.rut }}</td>
+
+                        <td> <a name="" id="" class="btn btn-info" href="{#% url 'editar' libro.id %#}" role="button">Reservar</a> </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+{% endblock %}

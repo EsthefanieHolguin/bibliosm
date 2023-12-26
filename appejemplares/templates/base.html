@@ -1,0 +1,110 @@
+{% load static %}  <!--Con esto le decimos al documento que es una plantilla-->
+
+<!doctype html>
+<html lang="en">
+
+<style>
+  .centrado {
+    text-align: center;
+  }
+</style>
+
+<head>
+  <title> {% block titulo %}  {% endblock %} </title>  <!--Con block titulo podemos cambiar el titulo de forma dinamica-->
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+
+  <link rel="stylesheet" type="text/css" href="{% static '/css/base.css' %}">
+  <link rel="icon" type="image/png" href="{% static '/img/logo.png' %}">
+
+
+</head>
+
+<!-- Lo que está en el cuerpo del html es lo que se replicará en todas las paginas -->
+<body>
+
+  <div class="container", style="margin-left: 0; margin-right: 0; width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * .1);
+  padding-left: calc(var(--bs-gutter-x) * .0);">
+      <div class="row">
+          <div class="col-2">
+            <!--NAVBAR -->
+
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1F3C77;">
+              <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                  <img src="{% static 'img/logo.png' %}" alt="" width="" height="100">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <!--{#% url 'inicio' %#}: Acá llamamos la url inicio definida en urls.py con el nombre que definimos-->
+                      <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{% url 'catalogo' %}">Catalogo</a>
+                    </li>
+
+                    {% if request.user.is_authenticated %}
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'libros' %}">Ejemplares</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'usuarios' %}">Usuarios</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'prestamos' %}">Préstamo</a>
+                      </li>
+                    {% endif %}
+
+                  </ul>
+
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <div class="container", style="align-items: flex-end">
+                      {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="{% url 'exit' %}">Salir</a>
+                        </li>
+                      {% else %}
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Iniciar Sesión</a>
+                        </li>
+                      {% endif %}
+                    </div>
+                  </ul>
+
+                </div>
+              </div>
+            </nav>
+
+        <!--FIN NAVBAR -->
+
+          </div>
+
+          <div class="col-10">
+            <br/>
+              {% block contenido %}  {% endblock %} <!--Acá lo dejamos para insertar el contenido de manera dinamica-->
+          </div>
+      </div>
+  </div>
+
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

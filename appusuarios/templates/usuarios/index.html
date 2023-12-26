@@ -1,0 +1,103 @@
+{%extends "base.html"%}
+
+{% block titulo %} Usuarios {% endblock %}
+
+{% block contenido %} 
+
+<div class="card", style="width: 80vw; margin-right: 1vw">
+    <div class="card-header">
+        <div class="row">
+            {% if request.user.is_authenticated %}
+                <h5>{{ user.username | upper }}, bienvenido</h5>
+                <br><br>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <a name="" id="" class="btn btn-success" href="{% url 'crear_usuario' %}" role="button">Agregar Usuario</a>
+            </div>
+
+            <!--Boton carga masiva-->
+            <div class="col-md-2">
+                <a name="" id="" class="btn btn-success" href="{% url 'subir_usuarios' %}" role="button">Carga Masiva</a>
+            </div>
+
+
+            <!--Barra de búsqueda USUARIOS-->
+            <div class="col-md-8 text-right">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Buscar por RUT, Nombre o Email... " name="buscar_usuario">
+                            <button class="btn btn-success" type="submit">Buscar</button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--fin barra busqueda-->
+        </div>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Usuarios</h4>
+        
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr> <!--Cabeceras de la tabla-->
+                        <th scope="col">RUT</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for usuario in usuarios %}
+
+                    <tr class="">
+                        <td>{{ usuario.rut_usuario }}</td>
+                        <td>{{ usuario.nombre_usuario }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.curso }}</td>
+
+                        <td> <a name="" id="" class="btn btn-info" href="{% url 'editar_usuario' usuario.rut_usuario %}" role="button">Editar</a>  
+                            <a name="" id="" class="btn btn-danger" href="{% url 'eliminar_usuario' usuario.rut_usuario %}" role="button" onclick="return confirmarEliminacion()">Borrar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if usuarios.has_previous %}
+                    <a href="?page=1">&laquo; primera</a>
+                    <a href="?page={{ usuarios.previous_page_number }}">anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}.
+                </span>
+
+                {% if usuarios.has_next %}
+                    <a href="?page={{ usuarios.next_page_number }}">siguiente</a>
+                    <a href="?page={{ usuarios.paginator.num_pages }}">última &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        
+    </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+  <script>
+    function confirmarEliminacion() {
+      return confirm("¿Estás seguro de que quieres eliminar el ejemplar?");
+    }
+  </script>
+
+{% endblock %}
