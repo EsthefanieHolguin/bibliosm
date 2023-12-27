@@ -1,4 +1,4 @@
-web: gunicorn sistema.wsgi
+web: gunicorn sistema.wsgi --log-file -
 manage.py migrate
 
 # Uncomment this `release` process if you are using a database, so that Django's model
