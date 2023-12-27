@@ -57,3 +57,4 @@ unicode==2.9
 urllib3==2.0.3
 wcwidth==0.2.6
 wsproto==1.2.0
+whitenoise[brotli]>=6.0,<7.0
